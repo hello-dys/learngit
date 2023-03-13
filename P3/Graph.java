@@ -14,7 +14,7 @@ public class Graph<T> {
 
 
     //初始化图,n指的是顶点的数量
-    public Graph(int n){
+    public Graph (int n){
         //顶点集合的大小是顶点的个数
         vertex = new ArrayList<>(n);
         //顶点的个数是二维数组的长度
