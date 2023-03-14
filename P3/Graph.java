@@ -14,7 +14,7 @@ public class Graph<T> {
 
 
     //初始化图,n指的是顶点的数量
-    public Graph (int n){
+    public Graph(int n){
         //顶点集合的大小是顶点的个数
         vertex = new ArrayList<>(n);
         //顶点的个数是二维数组的长度
@@ -50,19 +50,14 @@ public class Graph<T> {
         edgeCount++;
     }
     //获取图中顶点的个数
-    public int getvCount(){
+    public int getVerCount(){
         return vCount;
-    }
-
-    //获取图中边的个数
-    public int getEdgeCount(){
-        return edgeCount;
     }
 
     public int getDistance(Person p1, Person p2) {
         int[][] graph = matrix;
-        for (int i = 0; i < getvCount(); i++){
-            for (int j = 0; j < getvCount(); j++){
+        for (int i = 0; i < getVerCount(); i++){
+            for (int j = 0; j < getVerCount(); j++){
                 if (graph[i][j] == 0)
                     graph[i][j] = 9999;
             }

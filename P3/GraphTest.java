@@ -1,9 +1,10 @@
 package P3;
 
+import org.junit.Test;
+
 public class GraphTest {
-
-    public static void main(String[] args) {
-
+    @Test
+    public void test(){
         Graph.Person aa = new Graph.Person("aaa");
         Graph.Person bb = new Graph.Person("bbb");
         Graph.Person cc = new Graph.Person("ccc");
@@ -40,5 +41,6 @@ public class GraphTest {
         System.out.println(graph.getDistance(aa, gg));
         System.out.println(graph.getDistance(bb, gg));
     }
+
 
 }
