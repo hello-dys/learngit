@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Graph<T> {
     //顶点的数量
-    private int vCount;
+    private int vCount ;
     //边的数量
     private int edgeCount;
     //存储顶点的集合，我可以使用顶点的下标代替顶点
