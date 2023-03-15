@@ -1,8 +1,7 @@
-package test;
+package P3;
 
-import P3.FriendshipGraph;
-import P3.Person;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class FriendshipGraphTest {
