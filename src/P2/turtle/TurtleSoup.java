@@ -86,42 +86,14 @@ public class TurtleSoup {
      * @return adjustment to Bearing (right turn amount) to get to target point,
      *         must be 0 <= angle < 360
      */
-    public static double calculateBearingToPoint(double currentBearing, int currentX, int currentY,
-                                                 int targetX, int targetY) {
-        double deltaX = targetX - currentX;
-        double deltaY = targetY - currentY;
-        double dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        //相同点, return 0.0
-        if(dist == 0) return 0;
-        double targetBearing = Math.toDegrees(Math.asin((targetX - currentX) / dist));
-        if(targetX >= currentX) { // right
-            if(targetY < currentY) { // right, down
-                targetBearing = 180 - targetBearing;
-            }
-        /*
-        特殊情况:
-        when theta == 0, asin = 0;
-        when theta == 90, asin = 1;
-        when theta == 180, asin = 0.
-        */
-        }
-        else {
-    	/*
-    	特殊情况:
-    	when theta == 270, asin = -1.(180 - (-90) = 270)
-    	*/
-            if(targetY <= currentY) {
-                targetBearing = 180 - targetBearing;
-            }
-            else {
-                targetBearing = 360 - targetBearing;
-            }
-        }
-
-        targetBearing -= currentBearing;
-        //由于只能顺时针转，对两角之差的正负讨论一下
-        return targetBearing >= 0? targetBearing: targetBearing + 360;
+    public static double calculateBearingToPoint(double currentBearing, int currentX, int currentY, int targetX, int targetY) {
+        double dx = targetX - currentX;
+        double dy = targetY - currentY;
+        double angle = Math.toDegrees(Math.atan2(dy, dx));  // 计算弧度并转换为角度
+        double bearing = (90 - angle + 360) % 360;  // 将角度转换为方位角（以y轴为0度，顺时针方向）
+        double relativeBearing = (bearing - currentBearing + 360) % 360;  // 计算相对方位角
+        return relativeBearing;
     }
 
     /**
@@ -142,16 +114,16 @@ public class TurtleSoup {
         if(xCoords.size() == 0) {
             return new ArrayList<>();
         }
-        ArrayList<Double> ld = new ArrayList<Double>();
+        ArrayList<Double> s = new ArrayList<Double>();
         int currentX = xCoords.get(0), currentY = yCoords.get(0);
         double currentBearing = 0;
         for(int i = 1; i < xCoords.size(); i++) {
             currentBearing = calculateBearingToPoint(currentBearing, currentX, currentY, xCoords.get(i), yCoords.get(i));
-            ld.add(currentBearing);
+            s.add(currentBearing);
             currentX = xCoords.get(i);
             currentY = yCoords.get(i);
         }
-        return ld;
+        return s;
     }
     
     /**
@@ -170,17 +142,16 @@ public class TurtleSoup {
             if (i.x() < a.x() || (i.x() == a.x() && i.y() < a.y()))
                 a = i;
         }
-        Point curPoint = a, minPoint = null, lastPoint = a;
+        Point currentPoint = a, minPoint = null, lastPoint = a;
         double x1 = 0.0, y1 = -1.0;
         do {
-            convexHullPoints.add(curPoint);
+            convexHullPoints.add(currentPoint);
             double minTheta = Double.MAX_VALUE, x2 = 0.0, y2 = 0.0;
             for (Point i : points) {
                 if ((!convexHullPoints.contains(i) || i == a) && (i != lastPoint)) {
-                    double x3 = i.x() - curPoint.x(), y3 = i.y() - curPoint.y();
+                    double x3 = i.x() - currentPoint.x(), y3 = i.y() - currentPoint.y();
                     double Theta = Math
                             .acos((x1 * x3 + y1 * y3) / Math.sqrt(x1 * x1 + y1 * y1) / Math.sqrt(x3 * x3 + y3 * y3));
-                    // System.out.println(i.x() + " " + i.y() + " " + Theta);
                     if (Theta < minTheta || (Theta == minTheta && x3 * x3 + y3 * y3 > Math.pow(i.x() - minPoint.x(), 2)
                             + Math.pow(i.y() - minPoint.y(), 2))) {
                         minPoint = i;
@@ -192,10 +163,9 @@ public class TurtleSoup {
             }
             x1 = x2;
             y1 = y2;
-            lastPoint = curPoint;
-            curPoint = minPoint;
-            // System.out.println(curPoint.x() + " " + curPoint.y());
-        } while (curPoint != a);
+            lastPoint = currentPoint;
+            currentPoint = minPoint;
+        } while (currentPoint != a);
         return convexHullPoints;
     }
     
@@ -208,26 +178,26 @@ public class TurtleSoup {
      * @param turtle the turtle context
      */
     public static void drawPersonalArt(Turtle turtle) {
-        int rank = 5,minLength = 8; // rank:the rank of the triangle; minLength: the minimum triangle's length
-        int sideLength = minLength * (1 << rank);
-        turtle.turn(150);
-        drawSierpinskiTriangle(turtle, rank, sideLength);
-    }
-    public static void drawSierpinskiTriangle(Turtle turtle, int rank, int sideLength) {
-        if(rank == 1) {
-            drawRegularPolygon(turtle, 3, sideLength);
-            return;
+
+        //画一个正方形
+        for (int i = 0; i < 4; i++) {
+            turtle.forward(50);
+            turtle.turn(90);
         }
-        drawSierpinskiTriangle(turtle, rank - 1, sideLength / 2);
-        turtle.forward(sideLength / 2);
-        drawSierpinskiTriangle(turtle, rank - 1, sideLength / 2);
-        turtle.turn(120);
-        turtle.forward(sideLength / 2);
-        turtle.turn(240);
-        drawSierpinskiTriangle(turtle, rank - 1, sideLength / 2);
-        turtle.turn(240);
-        turtle.forward(sideLength / 2);
-        turtle.turn(120);
+
+        //画一个圆
+        for (int i = 0; i < 360; i++) {
+            turtle.forward(1);
+            turtle.turn(1);
+        }
+
+        //画一个三角形
+        turtle.forward(100);
+        turtle.turn(270);
+        for (int i = 0; i < 3; i++) {
+            turtle.forward(80);
+            turtle.turn(240);
+        }
     }
 
     /**
@@ -242,6 +212,7 @@ public class TurtleSoup {
 
         //drawSquare(turtle, 40);
         drawPersonalArt(turtle);
+
         // draw the window
         turtle.draw();
     }

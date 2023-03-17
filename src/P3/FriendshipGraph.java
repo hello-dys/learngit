@@ -16,7 +16,7 @@ public class FriendshipGraph<T> {
         //顶点集合的大小是顶点的个数
         vertex = new ArrayList<>();
         //顶点的个数是二维数组的长度
-        matrix = new int[7][7];
+        matrix = new int[100][100];
         //顶点数量、边数量初始化为0
         vCount = 0;
         edgeCount = 0;
@@ -32,9 +32,10 @@ public class FriendshipGraph<T> {
     public void addEdge(Person p1, Person p2){
         int v1 = vertex.indexOf(p1.getName());
         int v2 = vertex.indexOf(p2.getName());
-        matrix[v1][v2] = 1;
-        matrix[v2][v1] = 1;
-        edgeCount++;
+        if (v1 != v2){
+            matrix[v1][v2] = 1;
+            edgeCount++;
+        }
     }
 
     //获取图中顶点的个数

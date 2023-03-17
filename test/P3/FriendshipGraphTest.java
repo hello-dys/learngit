@@ -19,11 +19,13 @@ public class FriendshipGraphTest {
         graph.addEdge(a, b);
         graph.addEdge(b, c);
         graph.addEdge(c, d);
+        graph.addEdge(c, c);
         assertEquals("expected distance", 1, graph.getDistance(a, b));
         assertEquals("expected distance", 1, graph.getDistance(b, c));
         assertEquals("expected distance", 1, graph.getDistance(c, d));
         assertEquals("expected distance", 2, graph.getDistance(a, c));
         assertEquals("expected distance", 2, graph.getDistance(b, d));
         assertEquals("expected distance", 3, graph.getDistance(a, d));
+        assertEquals("expected distance", -1, graph.getDistance(c, c));
     }
 }

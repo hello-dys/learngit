@@ -80,13 +80,6 @@ public class MagicSquare {
                 }
                 j++;
             }
-//            for (int m=0; m<x;m++){
-//                for (int n=0;n<x;n++){
-//                    System.out.print(number[m][n]);
-//                    System.out.print(" ");
-//                }
-//                System.out.println("");
-//            }
         } catch (FileNotFoundException e) {
             System.out.println("找不到指定文件");
         } catch (IOException e) {
