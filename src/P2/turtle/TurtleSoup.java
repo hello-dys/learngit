@@ -211,8 +211,8 @@ public class TurtleSoup {
         DrawableTurtle turtle = new DrawableTurtle();
 
         //drawSquare(turtle, 40);
-        drawPersonalArt(turtle);
-
+        //drawPersonalArt(turtle);
+        drawRegularPolygon(turtle,5,50);
         // draw the window
         turtle.draw();
     }

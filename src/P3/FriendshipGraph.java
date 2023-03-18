@@ -2,22 +2,14 @@ package P3;
 
 import java.util.ArrayList;
 public class FriendshipGraph<T> {
-    //顶点的数量
     private int vCount ;
-    //边的数量
     private int edgeCount;
-    //存储顶点的集合，我可以使用顶点的下标代替顶点
     private ArrayList<T> vertex;
-    //使用二维数组表示邻接矩阵
     private int[][] matrix;
 
-    //初始化图,n指的是顶点的数量
     public FriendshipGraph(){
-        //顶点集合的大小是顶点的个数
         vertex = new ArrayList<>();
-        //顶点的个数是二维数组的长度
         matrix = new int[100][100];
-        //顶点数量、边数量初始化为0
         vCount = 0;
         edgeCount = 0;
     }
@@ -64,7 +56,33 @@ public class FriendshipGraph<T> {
         if (graph[vertex.indexOf(p1.getName())][vertex.indexOf(p2.getName())] == 9999){
             return -1;
         }
+        if (p1.isSameName(p2.getName())){
+            return 0;
+        }
         return graph[vertex.indexOf(p1.getName())][vertex.indexOf(p2.getName())];
+    }
+    public static void main(String[] args) {
+        FriendshipGraph graph = new FriendshipGraph();
+        Person rachel = new Person("Rachel");
+        Person ross = new Person("Ross");
+        Person ben = new Person("Ben");
+        Person kramer = new Person("Kramer");
+        graph.addVertex(rachel);
+        graph.addVertex(ross);
+        graph.addVertex(ben);
+        graph.addVertex(kramer);
+        graph.addEdge(rachel, ross);
+        graph.addEdge(ross, rachel);
+        graph.addEdge(ross, ben);
+        graph.addEdge(ben, ross);
+        System.out.println(graph.getDistance(rachel, ross));
+        //should print 1
+        System.out.println(graph.getDistance(rachel, ben));
+        //should print 2
+        System.out.println(graph.getDistance(rachel, rachel));
+        //should print 0
+        System.out.println(graph.getDistance(rachel, kramer));
+        //should print -1
     }
 }
 
