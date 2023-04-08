@@ -21,10 +21,6 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     //   TODO
     // Safety from rep exposure:
     //   TODO
-    
-    // TODO constructor
-    
-    // TODO checkRep
 
     private void checkRep(){
         for (int i = 0; i < vertices.size(); i++){
@@ -167,14 +163,6 @@ class Vertex<L> {
     //   TODO
     // Safety from rep exposure:
     //   TODO
-    
-    // TODO constructor
-    
-    // TODO checkRep
-    
-    // TODO methods
-    
-    // TODO toString()
 
     private void checkRep() {
         assert name != null;

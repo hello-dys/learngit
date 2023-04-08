@@ -44,18 +44,20 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
         graph.set(a, b, w);
         graph.set(b, a, w);
 
-        Assert.assertEquals("Graph {\n" +
-                "\tVertices: [a, b]\n" +
-                "\tEdges:\n" +
-                "\t\ta->b:2\n" +
-                "\t\tb->a:2\n" +
-                "}", graph.toString());
+        Assert.assertEquals("""
+                Graph {
+                \tVertices: [a, b]
+                \tEdges:
+                \t\ta->b:2
+                \t\tb->a:2
+                }""", graph.toString());
 
         graph.remove(a);
-        Assert.assertEquals("Graph {\n" +
-                "\tVertices: [b]\n" +
-                "\tEdges:\n" +
-                "}", graph.toString());
+        Assert.assertEquals("""
+                Graph {
+                \tVertices: [b]
+                \tEdges:
+                }""", graph.toString());
     }
 
     @Test

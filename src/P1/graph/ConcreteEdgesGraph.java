@@ -22,9 +22,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     // Safety from rep exposure:
     //   TODO
 
-    // TODO constructor
-
-    // TODO checkRep
 
     private void checkRep(){
         for(Edge<L> e : edges){
@@ -52,7 +49,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
         }
 
         if(weight > 0){
-            edges.add(new Edge<L>(source, target, weight));
+            edges.add(new Edge<>(source, target, weight));
             vertices.add(source);
             vertices.add(target);
         }
@@ -63,16 +60,9 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
 
     @Override
     public boolean remove(L vertex) {
-        Iterator<Edge<L>> listItr = edges.iterator();
 
-        while(listItr.hasNext()) {
-            Edge<L> e = listItr.next();
-
-            if(e.getSource().equals(vertex) ||
-                    e.getTarget().equals(vertex)){
-                listItr.remove();
-            }
-        }
+        edges.removeIf(e -> e.getSource().equals(vertex) ||
+                e.getTarget().equals(vertex));
 
         final boolean containsVertex = vertices.remove(vertex);
         checkRep();
@@ -80,7 +70,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     }
 
     @Override public Set<L> vertices() {
-        return new HashSet<L>(vertices);
+        return new HashSet<>(vertices);
     }
 
     @Override public Map<L, Integer> sources(L target) {
@@ -141,26 +131,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
  * <p>PS2 instructions: the specification and implementation of this class is
  * up to you.
  */
-//class Edge  {
-//
-//    // TODO fields
-//
-//    // Abstraction function:
-//    //   TODO
-//    // Representation invariant:
-//    //   TODO
-//    // Safety from rep exposure:
-//    //   TODO
-//
-//    // TODO constructor
-//
-//    // TODO checkRep
-//
-//    // TODO methods
-//
-//    // TODO toString()
-//
-//}
 class Edge<L> {
 
     private final  L source;
@@ -197,7 +167,7 @@ class Edge<L> {
      */
     public L getTarget(){
         return target;
-    };
+    }
 
     /**
      *
@@ -221,5 +191,5 @@ class Edge<L> {
      */
     @Override public String toString() {
         return String.format("Edge(%s->%s, weight = %d)", source, target, weight);
-    };
+    }
 }

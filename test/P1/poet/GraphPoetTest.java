@@ -3,8 +3,6 @@
  */
 package P1.poet;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,20 +31,21 @@ public class GraphPoetTest {
     @Test
     public void testToString() throws IOException {
         GraphPoet poet = new GraphPoet(new File("test/P1/poet/test.txt"));
-        Assert.assertEquals("GraphPoet {\n" +
-                "\tVertices: [new, worlds, explore, and, to, civilizations, seek, strange, life, out]\n" +
-                "\tEdges:\n" +
-                "\t\tto->explore:1\n" +
-                "\t\texplore->strange:1\n" +
-                "\t\tstrange->new:1\n" +
-                "\t\tnew->worlds:1\n" +
-                "\t\tto->seek:1\n" +
-                "\t\tseek->out:1\n" +
-                "\t\tout->new:1\n" +
-                "\t\tnew->life:1\n" +
-                "\t\tlife->and:1\n" +
-                "\t\tand->new:1\n" +
-                "\t\tnew->civilizations:1\n" +
-                "}", poet.toString());
+        Assert.assertEquals("""
+                GraphPoet {
+                \tVertices: [new, worlds, explore, and, to, civilizations, seek, strange, life, out]
+                \tEdges:
+                \t\tto->explore:1
+                \t\texplore->strange:1
+                \t\tstrange->new:1
+                \t\tnew->worlds:1
+                \t\tto->seek:1
+                \t\tseek->out:1
+                \t\tout->new:1
+                \t\tnew->life:1
+                \t\tlife->and:1
+                \t\tand->new:1
+                \t\tnew->civilizations:1
+                }""", poet.toString());
     }
 }

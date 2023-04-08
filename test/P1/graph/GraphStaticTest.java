@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * Tests for static methods of Graph.
- * 
+ * <p>
  * To facilitate testing multiple implementations of Graph, instance methods are
  * tested in GraphInstanceTest.
  */
@@ -46,12 +46,13 @@ public class GraphStaticTest {
         graph.set(159.0, 26.0, 2);
         graph.set(0.0, 159.0, 3);
 
-        assertEquals("Graph {\n" +
-                "\tVertices: [0.0, 159.0, 3.14, 26.0]\n" +
-                "\tEdges:\n" +
-                "\t\t3.14->159.0:1\n" +
-                "\t\t159.0->26.0:2\n" +
-                "\t\t0.0->159.0:3\n" +
-                "}", graph.toString());
+        assertEquals("""
+                Graph {
+                \tVertices: [0.0, 159.0, 3.14, 26.0]
+                \tEdges:
+                \t\t3.14->159.0:1
+                \t\t159.0->26.0:2
+                \t\t0.0->159.0:3
+                }""", graph.toString());
     }
 }
