@@ -3,7 +3,7 @@ package P2;
 import java.util.Objects;
 
 public class Person {
-    private String name;
+    private final String name;
 
     public Person(String name) {
         this.name = name;
@@ -16,8 +16,7 @@ public class Person {
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
-        if (!(obj instanceof Person)) return false;
-        Person other = (Person) obj;
+        if (!(obj instanceof Person other)) return false;
         return this.name.equals(other.getName());
     }
 

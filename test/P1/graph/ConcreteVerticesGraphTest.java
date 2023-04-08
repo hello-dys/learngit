@@ -35,7 +35,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //   Insert several vertices and edges, then check if the output is correct
 
     @Test
-    public void testGraphToString() {
+    public void test_graph_toString() {
         Graph<String> graph = emptyInstance();
 
         String a = "a";
@@ -78,7 +78,6 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         graph.set(b, a, w);
         Assert.assertEquals("{b=2}", graph.sources(a).toString());
         Assert.assertEquals("{b=2}", graph.targets(a).toString());
-        System.out.println(graph.sources(a));
     }
     /*
      * Testing Vertex...
@@ -89,7 +88,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //   grouped by type of the method
 
     @Test
-    public void testVertexConstructor() {
+    public void test_vertex_constructor() {
         String a = "a";
         new Vertex<>(a);
     }
@@ -98,7 +97,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      * Test all observers of Vertex
      */
     @Test
-    public void testVertexGet() {
+    public void test_vertex_get() {
         String a = "a";
         String b = "b";
         int w = 1;
@@ -119,7 +118,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      * Test all mutators of Vertex
      */
     @Test
-    public void testVertexUpdate() {
+    public void test_vertex_update() {
         String a = "a";
         String b = "b";
         int w1 = 1;
@@ -140,7 +139,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     }
 
     @Test
-    public void testVertexToString() {
+    public void test_vertex_toString() {
         Vertex<String> v = new Vertex<>("a");
         v.setTarget("b", 1);
         v.setSource("c", 2);

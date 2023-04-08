@@ -2,14 +2,30 @@ package P2;
 
 import P1.graph.Graph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class FriendshipGraph<L> {
 
     private final Graph<Person> graph;
+
+    // Abstraction function:
+    //   AF(graph) = Directed Graph D = (V, E) refers to a friendship graph
+    //       V = graph.vertices()
+    //       E = from src to v for src in graph.sources(v).keySet()
+    //             unions from v to tar for tar in graph.targets(v).keySet()
+    //             for v in V
+    // Representation invariant:
+    //   graph != null
+    // Safety from rep exposure:
+    //  每条边都在点集中
+
+    private void checkRep() {
+        Set<Person> peopleSet = graph.vertices();
+        for (Person p : peopleSet) {
+            assert !graph.sources(p).containsKey(p);
+            assert !graph.targets(p).containsKey(p);
+        }
+    }
 
     public FriendshipGraph() {
         graph = Graph.empty();
@@ -41,7 +57,7 @@ public class FriendshipGraph<L> {
                 }
             }
         }
-
+        checkRep();
         return -1; // No path found between source and destination
     }
 

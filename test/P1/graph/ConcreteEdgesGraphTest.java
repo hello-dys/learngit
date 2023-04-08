@@ -32,7 +32,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     //   Insert several vertices and edges, then check if the output is correct
 
     @Test
-    public void testGraphToString() {
+    public void test_graph_toString() {
         Graph<String> graph = emptyInstance();
 
         String a = "a";
@@ -74,7 +74,6 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
         graph.set(b, a, w);
         Assert.assertEquals("{b=2}", graph.sources(a).toString());
         Assert.assertEquals("{b=2}", graph.targets(a).toString());
-        System.out.println(graph.sources(a));
     }
 
     /*
@@ -91,7 +90,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     //    3. test toString method
 
     @Test
-    public void testEdgeConstructor() {
+    public void test_edge_constructor() {
         String a = "a";
         String b = "b";
         String anotherA = "a";
@@ -118,7 +117,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     }
 
     @Test
-    public void testEdgeGet() {
+    public void test_edge_get() {
         String a = "a";
         String b = "b";
         int w = 1;
@@ -130,7 +129,7 @@ public class ConcreteEdgesGraphTest extends GraphInstanceTest {
     }
 
     @Test
-    public void testEdgeToString() {
+    public void test_edge_toString() {
         String a = "a";
         String b = "b";
         int w = 2;

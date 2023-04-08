@@ -16,11 +16,13 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     private final List<Edge<L>> edges = new ArrayList<>();
 
     // Abstraction function:
-    //   TODO
+    //   AF(vertices, edges) = Directed Graph D = (V, E)
+    //       V = vertices
+    //       E = edges
     // Representation invariant:
-    //   TODO
+    //  vertices != null && edges != null
     // Safety from rep exposure:
-    //   TODO
+    // 每条边都在点集中
 
 
     private void checkRep(){
@@ -103,24 +105,17 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Graph {\n");
-
-        sb.append("\tVertices: ")
-                .append(String.join(", ", vertices.toString()))
-                .append('\n');
-
+        StringBuilder sb = new StringBuilder("Graph {\n");
+        sb.append("\tVertices: ").append(vertices).append('\n');
         sb.append("\tEdges:\n");
-        for (Edge<L> e : edges) {
-            sb.append("\t\t").append(e.getSource())
-                    .append("->").append(e.getTarget())
-                    .append(':').append(e.getWeight())
-                    .append('\n');
-        }
+        edges.forEach(e -> sb.append("\t\t").append(e.getSource())
+                .append("->").append(e.getTarget())
+                .append(':').append(e.getWeight())
+                .append('\n'));
         sb.append("}");
-
         return sb.toString();
     }
+
 }
 
 /**

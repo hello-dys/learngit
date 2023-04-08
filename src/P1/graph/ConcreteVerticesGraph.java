@@ -5,6 +5,7 @@ package P1.graph;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * An implementation of Graph.
@@ -16,11 +17,15 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     private final List<Vertex<L>> vertices = new ArrayList<>();
     
     // Abstraction function:
-    //   TODO
+    //   AF(vertices) = Directed Graph D = (V, E)
+    //       V = all vertex.getSources() and vertex.getTargets() union together for vertex in vertices
+    //       E = from src to vertex.getName for src in vertex.getSources()
+    //             unions from vertex.getName to tar for tar in vertex.getTargets()
+    //             for vertex in vertices
     // Representation invariant:
-    //   TODO
+    // 所有targets和sources都在graph中
     // Safety from rep exposure:
-    //   TODO
+    //  不能有重复边
 
     private void checkRep(){
         for (int i = 0; i < vertices.size(); i++){
@@ -42,26 +47,17 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     }
     
     @Override public int set(L source, L target, int weight) {
-        Set<L> nameSet = new HashSet<>();
-        for (Vertex<L> v : vertices){
-            nameSet.add(v.getName());
+        if (!vertices.stream().map(Vertex::getName).collect(Collectors.toSet()).containsAll(Arrays.asList(source, target))) {
+            vertices.addAll(Arrays.asList(new Vertex<>(source), new Vertex<>(target)));
         }
-        if (!nameSet.contains(source)){
-            vertices.add(new Vertex<>(source));
-        }
-        if (!nameSet.contains(target)){
-            vertices.add(new Vertex<>(target));
-        }
-        for (Vertex<L> v : vertices){
-            if (source.equals(v.getName())){
-                v.setTarget(target, weight);
-            } else if (target.equals(v.getName())) {
-                v.setSource(source, weight);
-            }
-        }
+        vertices.stream().filter(v -> source.equals(v.getName()))
+                .forEach(v -> v.setTarget(target, weight));
+        vertices.stream().filter(v -> target.equals(v.getName()))
+                .forEach(v -> v.setSource(source, weight));
         return 0;
     }
-    
+
+
     @Override public boolean remove(L vertex) {
         assert vertex != null;
         vertices.removeIf(v -> vertex.equals(v.getName()));
@@ -103,28 +99,25 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
     // TODO toString()
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Graph {\n");
-
+        StringBuilder sb = new StringBuilder("Graph {\n");
         sb.append("\tVertices: ")
-                .append(String.join(", ", getNameSet().toString()))
+                .append(getNameSet())
                 .append('\n');
-
         sb.append("\tEdges:\n");
-        for (Vertex<L> v : vertices) {
-            L name = v.getName();
-            Map<L, Integer> targetsMap = v.getTargets();
-            for (L tarName : targetsMap.keySet()) {
-                sb.append("\t\t").append(name)
-                        .append("->").append(tarName)
-                        .append(':').append(targetsMap.get(tarName))
-                        .append('\n');
-            }
+        for (Vertex<L> vertex : vertices) {
+            L name = vertex.getName();
+            Map<L, Integer> targets = vertex.getTargets();
+            targets.forEach((target, weight) ->
+                    sb.append("\t\t").append(name)
+                            .append("->").append(target)
+                            .append(':').append(weight)
+                            .append('\n')
+            );
         }
-
         sb.append("}");
         return sb.toString();
     }
+
 
     private Set<L> getNameSet() {
         Set<L> nameSet = new HashSet<>();
@@ -214,14 +207,19 @@ class Vertex<L> {
     }
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Vertex {\n");
-        for (L source : sources.keySet()) {
-            sb.append('\t').append(source).append("->").append(name).append(':').append(sources.get(source)).append('\n');
-        }
-        for (L target : targets.keySet()) {
-            sb.append('\t').append(name).append("->").append(target).append(':').append(targets.get(target)).append('\n');
-        }
+        StringBuilder sb = new StringBuilder("Vertex {\n");
+        sources.forEach((source, weight) ->
+                sb.append('\t').append(source)
+                        .append("->").append(name)
+                        .append(':').append(weight)
+                        .append('\n')
+        );
+        targets.forEach((target, weight) ->
+                sb.append('\t').append(name)
+                        .append("->").append(target)
+                        .append(':').append(weight)
+                        .append('\n')
+        );
         sb.append("}");
         return sb.toString();
     }

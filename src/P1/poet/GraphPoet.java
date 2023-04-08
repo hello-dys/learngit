@@ -60,11 +60,15 @@ public class GraphPoet {
     private final Graph<String> graph = Graph.empty();
 
     // Abstraction function:
-    //   TODO
+    //AF(graph) = Directed Graph D = (V, E)
+    //       V = graph.vertices()
+    //       E = src->v weights w for src: w in graph.sources(v)
+    //             and v->tar weights w for tar: w in graph.targets(v)
+    //             for v in V
     // Representation invariant:
-    //   TODO
+    // graph中没有孤立的点
     // Safety from rep exposure:
-    //   TODO
+    //  每条边的权值都大于0
 
     /**
      * Create a new poet with the graph from corpus (as described above).
